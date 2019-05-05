@@ -11,7 +11,7 @@ import java.util.TreeSet;
 
 public class BikeService {
 
-    private static ArrayList<Bike> listOfBikes = new ArrayList<Bike>();
+    private static final ArrayList<Bike> listOfBikes = new ArrayList<Bike>();
 
     private static BikeService ourInstance = new BikeService();
     public static BikeService getInstance() {
@@ -20,6 +20,7 @@ public class BikeService {
 
 
     private BikeService() {
+        /*
         Conditions motorcycleConditions = new Conditions(18, new TreeSet<String>(){{add("A1");}});
         Conditions ebikeConditions = new Conditions(12);
         Conditions scooterConditions = new Conditions(21, new TreeSet<String>(){{add("A1"); add("A");}});
@@ -43,6 +44,7 @@ public class BikeService {
         listOfBikes.add(ebike);
         listOfBikes.add(scooter);
         listOfBikes.add(quadBike);
+        */
     }
 
     public static Bike getOne(Integer bikeId){
@@ -63,6 +65,19 @@ public class BikeService {
     public static void printAllBikesName(){
         for(Bike bike: listOfBikes)
             System.out.println(bike.getId() + " " + bike.getName());
+    }
+
+    public static void addBike(String name, String description, String type, Double bikePricePerDay,
+                               Double securityLockPrice, Double helmetPrice, Integer minAge, TreeSet<String> category, String batteryType,
+                               Integer batteryCapacity){
+        Integer lastBikeId = 0;
+        if(!listOfBikes.isEmpty()) lastBikeId = listOfBikes.get(listOfBikes.size()-1).getId();
+        BikeAdditionalServices bikeServices = new BikeAdditionalServices(securityLockPrice, helmetPrice);
+        Conditions conditions = new Conditions(minAge,category);
+        if(batteryType == null)
+            listOfBikes.add(new Bike(lastBikeId + 1, name, description, type, bikePricePerDay, conditions, bikeServices));
+        else
+            listOfBikes.add(new ElectricBike(lastBikeId + 1, name, description, type, bikePricePerDay, conditions, bikeServices, batteryType, batteryCapacity));
     }
 
 }

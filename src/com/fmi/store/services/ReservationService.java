@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class ReservationService {
 
-    private static ArrayList<Reservation> listOfReservations = new ArrayList<Reservation>();
+    private static final ArrayList<Reservation> listOfReservations = new ArrayList<Reservation>();
 
     private static ReservationService ourInstance = new ReservationService();
     public static ReservationService getInstance() {
@@ -15,6 +15,7 @@ public class ReservationService {
     }
 
     private ReservationService() {
+        /*
         Date pickUpDate = new Date(2019,3,28,10,30);
         Date dropOffDate = new Date(2019,3,30,14,20);
         Location myPickUpLocation = new Location("Romania","Bacau", pickUpDate);
@@ -37,7 +38,10 @@ public class ReservationService {
                 BikeService.getOne(4), quadBikePreferences,myCard));
         listOfReservations.add(new Reservation(5,UserService.getOne(5),myPickUpLocation,myDropOffLocation,
                 BikeService.getOne(2), scooterPreferences,myCard));
+
         calculateTotalPriceForAllReservations();
+        */
+
     }
 
     public static Reservation getOne(Integer reservationId){
@@ -47,12 +51,14 @@ public class ReservationService {
         return null;
     }
 
-    public static void createReservation(User user, Location pickUpInfo, Location dropOffInfo, Bike bike,
+    public static Reservation createReservation(User user, Location pickUpInfo, Location dropOffInfo, Bike bike,
                                          UserPreferences userPreferences, Payment card){
-        Integer lastReservationId = listOfReservations.get(listOfReservations.size()-1).getId();
+        Integer lastReservationId = 0;
+        if(!listOfReservations.isEmpty()) lastReservationId = listOfReservations.get(listOfReservations.size()-1).getId();
         Reservation newReservation =  new Reservation(lastReservationId+1,user,pickUpInfo,dropOffInfo,bike,userPreferences,card);
         listOfReservations.add(newReservation);
         calculateTotalPrice(newReservation);
+        return newReservation;
     }
 
     public static Double additionalServicesPrice(UserPreferences userPreferences, BikeAdditionalServices bikeServices){

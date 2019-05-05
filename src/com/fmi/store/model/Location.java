@@ -1,5 +1,6 @@
 package com.fmi.store.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Location {
@@ -8,6 +9,7 @@ public class Location {
     private String city;
     private Date date;
 
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM 2019 HH:mm ");
 
     public Location(String country, String city, Date date){
         this.country = country;
@@ -26,7 +28,6 @@ public class Location {
 
     public void printLocationInfo(){
         System.out.println("Location: " + getCountry() + " " +getCity() + " "
-                + getDate().getDate() + "-" + getDate().getMonth() + "-" + getDate().getYear()
-                + " " + getDate().getHours() + ":" + getDate().getMinutes());
+                + dateFormat.format(getDate()));
     }
 }

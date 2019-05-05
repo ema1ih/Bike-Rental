@@ -1,6 +1,8 @@
 package com.fmi.store.model;
 
-public class User implements Comparable<User>{
+import java.io.Serializable;
+
+public class User implements Comparable<User>, Serializable {
 
     private Integer id;
     private String username;
@@ -54,7 +56,7 @@ public class User implements Comparable<User>{
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
     public void printUser(){
-        System.out.println("User: " + getId() + " " + getUsername() + " " + getPassword()+ " " + getAge() +
+        System.out.println("User " + getId() + ": " + getUsername() + " " + getPassword()+ " " + getAge() +
                 " " + getEmail() + " " + getPhoneNumber());
     }
 
